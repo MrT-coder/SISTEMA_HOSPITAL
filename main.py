@@ -35,9 +35,12 @@ def menu():
             registrar_producto(cuenta_id, nombre, desc, precio)
 
         elif opcion == "3":
-            paciente_id = int(input("ID de paciente: "))
-            factura = generar_factura(paciente_id)
-            print(f"Factura Generada ID: {factura.id}, Total: {factura.total}")
+            cuenta_id = int(input("ID de cuenta: "))
+            factura = generar_factura(cuenta_id)
+            if factura:
+                print(f"Factura Generada ID: {factura['id']}, Total: {factura['total']}")
+            else:
+                print("No se encontró una cuenta con ese ID.")
 
         elif opcion == "4":
             crear_cuenta()
