@@ -6,6 +6,7 @@ from services.registro_service import (
     crear_cuenta
 )
 from services.factura_service import generar_factura
+from services.paciente_service import registrar_paciente
 
 def menu():
     while True:
@@ -15,7 +16,8 @@ def menu():
         print("3. Generar Factura")
         print("4. Crear Nueva Cuenta")
         print("5. Listar Cuentas")
-        print("6. Salir")
+        print("6. Registrar Paciente")
+        print("7. Salir")
 
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
@@ -38,7 +40,9 @@ def menu():
             cuenta_id = int(input("ID de cuenta: "))
             factura = generar_factura(cuenta_id)
             if factura:
-                print(f"Factura Generada ID: {factura['id']}, Total: {factura['total']}")
+                print(f"Factura Generada ID: {factura['factura_id']}, Total: {factura['total']}, Fecha: {factura['fecha']}")
+                paciente = factura['paciente']
+                print(f"Paciente: {paciente['nombre']} (Cédula: {paciente['cedula']}, Estado: {paciente['estado']})")
             else:
                 print("No se encontró una cuenta con ese ID.")
 
@@ -47,8 +51,14 @@ def menu():
 
         elif opcion == "5":
             listar_cuentas()
-
+        
         elif opcion == "6":
+            nombre = input("Nombre del paciente: ")
+            cedula = input("Cédula del paciente: ")
+            paciente, cuenta = registrar_paciente(nombre, cedula)
+            print(f"✅ Paciente registrado con ID {paciente.id} y cuenta ID {cuenta.id}")
+
+        elif opcion == "7":
             break
 
         else:
